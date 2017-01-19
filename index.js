@@ -10,6 +10,9 @@ const bot = new Discord.Client();
 // Set token
 const token = 'MjcxMzE5MjEyNDM2MjI2MDQ4.C2EtOQ.NrH92Areg97ZClIHbeIGZ7xOpsk';
 
+// Dev token
+const devToken = 'MjcxNjc5NDI2NzU0OTA0MDY3.C2J8sQ.vHG_XQQY5OMKx21Q8rCTXIzcIME';
+
 // The corporation ID
 const corpID = '98437545';
 
@@ -20,7 +23,7 @@ const indyID = '98453454';
 const prefix = "-";
 
 // log our bot in
-bot.login( token );
+bot.login( devToken );
 
 // On ready!
 bot.on( 'ready', function( event ) {
@@ -36,7 +39,7 @@ bot.on( 'message', message => {
     if ( message.author.bot ) return;
 
     // Show latest EVE kill
-    if (message.content === "-last kill gaming") {
+    if ( message.content.startsWith( prefix + "last kill gaming") ) {
         const zkillLink = 'https://zkillboard.com/api/kills/corporationID/' + corpID + '/limit/1/';
         axios.get( zkillLink )
             .then(function( response ) {
@@ -46,7 +49,7 @@ bot.on( 'message', message => {
     }
 
     // Show latest EVE death
-    if ( message.content === "-last death gaming" ) {
+    if ( message.content.startsWith( prefix + "last death gaming" ) ) {
         const zkillLink = 'https://zkillboard.com/api/losses/corporationID/' + corpID + '/limit/1/';
         axios.get( zkillLink )
             .then( function(response ) {
@@ -56,7 +59,7 @@ bot.on( 'message', message => {
     }
 
     // Show latest Industries EVE kill
-    if ( message.content === "-last kill indy" ) {
+    if ( message.content.startsWith( prefix + "last kill indy" ) ) {
         const zkillLink = 'https://zkillboard.com/api/kills/corporationID/' + indyID + '/limit/1/';
         axios.get( zkillLink )
             .then( function( response ) {
@@ -66,13 +69,17 @@ bot.on( 'message', message => {
     }
 
     // Show latest Industries EVE death
-    if ( message.content === "-last death indy" ) {
+    if ( message.content.startsWith( prefix + "last death indy" ) ) {
         const zkillLink = 'https://zkillboard.com/api/losses/corporationID/' + indyID + '/limit/1/';
         axios.get( zkillLink )
             .then( function( response ) {
                 const killID = response.data[0].killID;
                 message.channel.sendMessage( 'Latest The Realm Industries death: ' + 'https://zkillboard.com/kill/' + killID + '/' );
             });
+    }
+
+    if ( message.content.startsWith( prefix + "info" ) ) {
+        message.channel.sendMessage( 'Leadership```Leader - Sinistrous \nHead of Facilities - Korus \nHead of PR - Burntcustard \nHead of Recruitment - Jaster```' );
     }
 });
 
