@@ -23,7 +23,7 @@ const indyID = '98453454';
 const prefix = "-";
 
 // log our bot in
-bot.login( devToken );
+bot.login( token );
 
 // On ready!
 bot.on( 'ready', function( event ) {
@@ -78,8 +78,23 @@ bot.on( 'message', message => {
             });
     }
 
+    // Show all community useful information
     if ( message.content.startsWith( prefix + "info" ) ) {
-        message.channel.sendMessage( 'Leadership```Leader - Sinistrous \nHead of Facilities - Korus \nHead of PR - Burntcustard \nHead of Recruitment - Jaster```' );
+        const leadership = 'Leadership: ```Sinistrous - Leader \nRequiem - Leader \nJaster - Head of Recruitment \nKorus - Head of Faciilities \nNapaztrix - Head of Events \nDarkLordCookie - Head of Content \nBurntcustard - Head of PR \nOrb - American Liaison Leader```';
+        const general = '\nGeneral: ```Teamspeak Address: ts.the-realm-gaming.co.uk \nTeamspeak IP: 178.62.37.216 \nWebsite: https://the-realm-gaming.co.uk \nContact email: admin@the-realm-gaming.co.uk```';
+        message.channel.sendMessage( leadership + general );
+    }
+
+    // Show Teamspeak info
+    if ( message.content.startsWith( prefix + "ts" ) ) {
+        const ts = '\nTeamspeak info: ```Teamspeak Address: ts.the-realm-gaming.co.uk \nTeamspeak IP: 178.62.37.216```';
+        message.channel.sendMessage( ts );
+    }
+
+    // Show all commands
+    if ( message.content.startsWith( prefix + "commands" ) ) {
+        const cmdList = 'Commands for Realm Bot:```Markdown\n# General:\n-info\n-ts\n\n# EVE Online Commands:\n-last kill gaming\n-last death gaming\n-last kill indy\n-last death indy```';
+        message.channel.sendMessage( cmdList );
     }
 });
 
